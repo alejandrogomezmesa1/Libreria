@@ -1,0 +1,57 @@
+@model BibliotecaEFCore.Models.Prestamo
+@{
+    ViewData["Title"] = "Registrar Préstamo";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-3">
+                <h5 class="mb-0"><i class="bi bi-arrow-left-right me-2"></i>Registrar Préstamo</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <!-- Usuario -->
+                    <div class="mb-3">
+                        <label asp-for="UsuarioId" class="form-label fw-bold">Usuario</label>
+                        <select asp-for="UsuarioId" asp-items="ViewBag.Usuarios" class="form-select">
+                            <option value="">-- Seleccione un usuario --</option>
+                        </select>
+                        <span asp-validation-for="UsuarioId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Libro -->
+                    <div class="mb-3">
+                        <label asp-for="LibroId" class="form-label fw-bold">Libro</label>
+                        <select asp-for="LibroId" asp-items="ViewBag.Libros" class="form-select">
+                            <option value="">-- Seleccione un libro --</option>
+                        </select>
+                        <span asp-validation-for="LibroId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Fecha de Préstamo -->
+                    <div class="mb-4">
+                        <label asp-for="FechaPrestamo" class="form-label fw-bold">Fecha de Préstamo</label>
+                        <input asp-for="FechaPrestamo" type="date" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="FechaPrestamo" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between pt-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Volver
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-lg me-1"></i> Guardar Préstamo
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

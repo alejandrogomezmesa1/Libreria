@@ -1,0 +1,62 @@
+@model BibliotecaEFCore.Models.Prestamo
+@{
+    ViewData["Title"] = "Editar Préstamo";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-warning text-dark py-3">
+                <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Editar Préstamo #@Model.Id</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <!-- Usuario -->
+                    <div class="mb-3">
+                        <label asp-for="UsuarioId" class="form-label fw-bold">Usuario</label>
+                        <select asp-for="UsuarioId" asp-items="ViewBag.Usuarios" class="form-select"></select>
+                        <span asp-validation-for="UsuarioId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Libro -->
+                    <div class="mb-3">
+                        <label asp-for="LibroId" class="form-label fw-bold">Libro</label>
+                        <select asp-for="LibroId" asp-items="ViewBag.Libros" class="form-select"></select>
+                        <span asp-validation-for="LibroId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Fecha de Préstamo -->
+                    <div class="mb-3">
+                        <label asp-for="FechaPrestamo" class="form-label fw-bold"></label>
+                        <input asp-for="FechaPrestamo" type="date" class="form-control" value="@Model.FechaPrestamo.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="FechaPrestamo" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Fecha de Devolución -->
+                    <div class="mb-4">
+                        <label asp-for="FechaDevolucion" class="form-label fw-bold">Fecha de Devolución</label>
+                        <input asp-for="FechaDevolucion" type="date" class="form-control" value="@(Model.FechaDevolucion.HasValue ? Model.FechaDevolucion.Value.ToString("yyyy-MM-dd") : "")" />
+                        <span class="form-text small text-muted">Establezca una fecha para dar por concluido el préstamo.</span>
+                        <span asp-validation-for="FechaDevolucion" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between pt-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Volver al listado
+                        </a>
+                        <button type="submit" class="btn btn-warning fw-bold">
+                            <i class="bi bi-save me-1"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

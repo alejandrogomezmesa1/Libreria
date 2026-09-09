@@ -1,0 +1,50 @@
+@model BibliotecaEFCore.Models.Usuario
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+    var tienePrestamosPendientes = Model.Prestamos != null && Model.Prestamos.Any(p => p.FechaDevolucion == null);
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 border-top border-danger border-4">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0 text-danger"><i class="bi bi-exclamation-octagon me-2"></i>Confirmar Eliminación de Usuario</h5>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted">¿Está seguro de que desea eliminar el siguiente usuario?</p>
+                <div class="alert alert-light border p-3 mb-4">
+                    <div class="mb-2"><strong>ID:</strong> #@Model.Id</div>
+                    <div class="mb-2"><strong>Nombre:</strong> @Model.Nombre</div>
+                    <div class="mb-2">
+                        <strong>Tarjeta de Biblioteca:</strong>
+                        @(Model.Tarjeta?.Codigo ?? "Sin tarjeta asignada")
+                    </div>
+                    <div>
+                        <strong>Historial de Préstamos:</strong>
+                        <span class="badge bg-secondary">@(Model.Prestamos?.Count ?? 0) registro(s)</span>
+                    </div>
+                </div>
+
+                @if (tienePrestamosPendientes)
+                {
+                    <div class="alert alert-danger small">
+                        <i class="bi bi-x-circle me-1"></i>
+                        <strong>Bloqueo:</strong> Este usuario tiene libros prestados que aún no han sido devueltos. Debe registrar la devolución antes de eliminarlo.
+                    </div>
+                }
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger" @(tienePrestamosPendientes ? "disabled" : "")>
+                            <i class="bi bi-trash me-1"></i> Confirmar y Eliminar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

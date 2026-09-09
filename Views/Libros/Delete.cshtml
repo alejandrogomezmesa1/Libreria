@@ -1,0 +1,51 @@
+@model BibliotecaEFCore.Models.Libro
+@{
+    ViewData["Title"] = "Eliminar Libro";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 border-top border-danger border-4">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0 text-danger"><i class="bi bi-exclamation-octagon me-2"></i>Confirmar Eliminación de Libro</h5>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted">¿Está seguro de que desea eliminar el siguiente libro de la biblioteca?</p>
+                <div class="alert alert-light border p-3 mb-4">
+                    <div class="mb-2"><strong>ID:</strong> #@Model.Id</div>
+                    <div class="mb-2"><strong>Título:</strong> @Model.Titulo</div>
+                    <div class="mb-2">
+                        <strong>Autor:</strong> 
+                        <span class="text-primary">@(Model.Autor?.Nombre ?? "Sin autor")</span>
+                    </div>
+                    <div>
+                        <strong>Categorías:</strong>
+                        @if (Model.Categorias != null && Model.Categorias.Any())
+                        {
+                            foreach (var cat in Model.Categorias)
+                            {
+                                <span class="badge bg-info text-dark me-1">@cat.Nombre</span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted small">Ninguna</span>
+                        }
+                    </div>
+                </div>
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i> Confirmar y Eliminar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

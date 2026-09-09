@@ -1,0 +1,55 @@
+@model BibliotecaEFCore.Models.Prestamo
+@{
+    ViewData["Title"] = "Eliminar Préstamo";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 border-top border-danger border-4">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0 text-danger"><i class="bi bi-exclamation-octagon me-2"></i>Confirmar Eliminación de Préstamo</h5>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted">¿Está seguro de que desea eliminar este registro de préstamo?</p>
+                <div class="alert alert-light border p-3 mb-4">
+                    <div class="mb-2"><strong>ID Préstamo:</strong> #@Model.Id</div>
+                    <div class="mb-2">
+                        <strong>Usuario:</strong> 
+                        <span class="fw-bold">@Model.Usuario?.Nombre</span>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Libro:</strong> 
+                        <span class="text-primary">@Model.Libro?.Titulo</span>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Fecha de Préstamo:</strong> 
+                        @Model.FechaPrestamo.ToString("dd/MM/yyyy")
+                    </div>
+                    <div>
+                        <strong>Estado:</strong>
+                        @if (Model.FechaDevolucion.HasValue)
+                        {
+                            <span class="badge bg-success">Devuelto el @Model.FechaDevolucion.Value.ToString("dd/MM/yyyy")</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Pendiente</span>
+                        }
+                    </div>
+                </div>
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i> Confirmar y Eliminar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+@model BibliotecaEFCore.Models.Libro
+@{
+    ViewData["Title"] = "Editar Libro";
+    var categorias = ViewBag.Categorias as List<BibliotecaEFCore.Models.Categoria> ?? new List<BibliotecaEFCore.Models.Categoria>();
+    var categoriasDelLibro = Model.Categorias != null ? Model.Categorias.Select(c => c.Id).ToHashSet() : new HashSet<int>();
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-warning text-dark py-3">
+                <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Editar Libro</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <!-- Título -->
+                    <div class="mb-3">
+                        <label asp-for="Titulo" class="form-label fw-bold"></label>
+                        <input asp-for="Titulo" class="form-control" />
+                        <span asp-validation-for="Titulo" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Autor -->
+                    <div class="mb-3">
+                        <label asp-for="AutorId" class="form-label fw-bold">Autor</label>
+                        <select asp-for="AutorId" asp-items="ViewBag.AutorId" class="form-select"></select>
+                        <span asp-validation-for="AutorId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Categorías -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold d-block">Categorías</label>
+                        <div class="p-3 bg-light rounded border">
+                            <div class="row g-2">
+                                @if (categorias.Any())
+                                {
+                                    foreach (var cat in categorias)
+                                    {
+                                        var isChecked = categoriasDelLibro.Contains(cat.Id);
+                                        <div class="col-sm-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="categoriaSeleccionadas" value="@cat.Id" id="cat_@cat.Id" @(isChecked ? "checked" : "")>
+                                                <label class="form-check-label" for="cat_@cat.Id">
+                                                    @cat.Nombre
+                                                </label>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-12 text-muted small">No hay categorías disponibles.</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between pt-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i> Volver
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="bi bi-save me-1"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
