@@ -29,11 +29,6 @@ public class HomeController(ApplicationDbContext contexto) : Controller
         return View(ultimosPrestamos);
     }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
