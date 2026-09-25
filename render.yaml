@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: biblioteca-web
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: biblioteca-db
+          property: connectionString
+
+databases:
+  - name: biblioteca-db
+    databaseName: biblioteca
+    user: biblioteca_user
+    plan: free
+    region: oregon
