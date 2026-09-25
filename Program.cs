@@ -63,6 +63,17 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Habilitar CORS completamente abierto (sin restricciones para consumo público)
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Habilitar middleware de Swagger (disponible en todos los entornos para facilitar pruebas)
@@ -81,6 +92,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseCors();
 
 // Ruta predeterminada
 app.MapControllerRoute(
