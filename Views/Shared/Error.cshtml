@@ -1,4 +1,4 @@
-﻿@model ErrorViewModel
+@model ErrorViewModel
 @{
     ViewData["Title"] = "Error";
 }
@@ -11,6 +11,13 @@
     <p>
         <strong>Request ID:</strong> <code>@Model.RequestId</code>
     </p>
+}
+
+@if (ViewBag.DetalleError != null)
+{
+    <div class="alert alert-danger my-3">
+        <strong>Detalle del error:</strong> @ViewBag.DetalleError
+    </div>
 }
 
 <h3>Development Mode</h3>

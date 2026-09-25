@@ -28,10 +28,10 @@ if (!string.IsNullOrEmpty(rawConnectionString) &&
     {
         Host = uri.Host,
         Port = uri.Port > 0 ? uri.Port : 5432,
-        Username = userInfo.Length > 0 ? userInfo[0] : "",
-        Password = userInfo.Length > 1 ? userInfo[1] : "",
+        Username = userInfo.Length > 0 ? Uri.UnescapeDataString(userInfo[0]) : "",
+        Password = userInfo.Length > 1 ? Uri.UnescapeDataString(userInfo[1]) : "",
         Database = uri.LocalPath.TrimStart('/'),
-        SslMode = Npgsql.SslMode.Require
+        SslMode = Npgsql.SslMode.Prefer
     };
     connectionString = npgsqlBuilder.ToString();
 }
