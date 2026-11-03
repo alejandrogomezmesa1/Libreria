@@ -46,6 +46,7 @@ Es un framework multiplataforma (Windows, macOS, Linux), de alto rendimiento y d
 ### Inyección de Dependencias (Dependency Injection - DI)
 Es un patrón de diseño software implementado de forma nativa en ASP.NET Core. Permite suministrar objetos (servicios) que una clase necesita en lugar de instanciarlos manualmente con `new`.
 * **En el proyecto:** `Program.cs` registra `ApplicationDbContext` en el contenedor de servicios. Cuando un controlador (`LibrosController`) requiere el contexto, la plataforma se lo suministra en el constructor:
+
   ```csharp
   public class LibrosController(ApplicationDbContext contexto) : Controller
   {
@@ -302,5 +303,3 @@ Clase estática que inserta datos iniciales de prueba (autores, categorías, lib
 
 ---
 
-### 💡 CONSEJO FINAL PARA LA SUSTENTACIÓN:
-Muestra seguridad al responder, recuerda la diferencia entre **GET** (mostrar pantalla) y **POST** (guardar datos), y utiliza los términos correctos: **Patrón MVC**, **EF Core (ORM)**, **Tag Helpers**, **Relaciones de Entidades** y **Validaciones**. ¡Mucho éxito! 🚀
